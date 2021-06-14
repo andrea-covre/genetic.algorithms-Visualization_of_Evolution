@@ -3,7 +3,7 @@
 ## Introduction
 This work was originally done as high school graduation thesis for the academic year 2016-2017 at the <em> [Istituto Statale di Istruzione Superiore “Arturo Malignani”](http://www.malignani.ud.it) Liceo delle Scienze Applicate</em> (Udine, Italy). While researching about genetic algorithms for my thesis, I decided to also create my own genetic algorithm that visually and intuitively showcases step by step the procedures involved to generate solutions to certain problems by taking advantage of Darwin's Evolutionary Genetics. The problem solved by this visualization is trivial (generate a string that matches a target string only using randomly generated characters/genes), but it is still quite effective in displaying the mechanisms of genetic algorithms and how they can be scaled up to solve more convoluted problems.
 
-
+<br>
 
 
 ## Evolutionary Cycle
@@ -27,6 +27,7 @@ void createPopulation() {
 
 In an actual genetic algorithm the population size would be much larger than just 12 *individuals* as to increase diversity and accelerate the evolutionary process, however for the sake of an effective visualization and readably the population size is limited to just 12 *individuals*.
 
+<br>
 
 ### Fitness calculation
 
@@ -61,7 +62,7 @@ The higher the fitness of one individual the higher are its chances to reproduce
 
 ![Fitness calculation and chances of reproduction by Andrea Covre](/figures/fitness-calculation.png "Fitness calculation")
 
-
+<br>
 
 ### Parents selection
 
@@ -84,7 +85,7 @@ void getParents() {
 }
 ```
 
-
+<br>
 
 ### Child generation
 
@@ -127,8 +128,7 @@ In this algorithm, the chosen method is the fragmented cross-over in order to in
 
 ![Child Generation](/figures/child-generation.png "Child Generation")
 
-
-
+<br>
 
 ### Child mutation
 
@@ -151,7 +151,7 @@ In the example below the child's 4th gene was supposed to be inherited by the fi
 
 ![Mutation on a child's gene by Andrea Covre](/figures/mutation.png "Mutation on a child's gene")
 
-
+<br>
 
 ### Next generation and evolutionary development
 
@@ -168,6 +168,7 @@ After 287 generations we finally have an individual that perfectly matches with 
 
 Such individual, therefore, represent the solution to the problem. It's not always possible to achieve perfect fitness scores (optimal solutions), however the higher the fitness score the better the approximation of the solution is.
 
+<br>
 
 ## Files
 
@@ -191,7 +192,7 @@ It manages and contains all the variables, constants and functions in charge of 
 
 It contains the code needed to create and display a status bar at the bottom of the screen that shows relevant information.
 
-
+<br>
 
 ## Execution
 
