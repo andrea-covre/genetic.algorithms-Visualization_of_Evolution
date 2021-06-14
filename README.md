@@ -15,9 +15,17 @@ This work was originally done as high school graduation thesis for the academic 
 The initial population is composed of strings formed by random characters that represent the genes. The topmost string is the target string and represents the *environment* the population has to evolve to fit (which happens when the correct characters appear at the correct positions). 
 
 ![Initial population by Andrea Covre](/figures/initial-population.png "Initial population")
+``` JavaScript
+void createPopulation() {
+  for (int i = 0; i < popSize; i++) {
+    for (int j = 0; j < targetLength; j++) {
+      population[i][j] = charPool[ floor( random(0, charPool.length) )];
+    }
+  }
+}
+```
 
 In an actual genetic algorithm the population size would be much larger than just 12 *individuals* as to increase diversity and accelerate the evolutionary process, however for the sake of an effective visualization and readably the population size is limited to just 12 *individuals*.
-
 
 
 ### Fitness calculation
@@ -25,6 +33,29 @@ In an actual genetic algorithm the population size would be much larger than jus
 Fitness is the value we use to represent how suitable one individual (a solution to the problem) is within the environment set by the problem we are trying to solve. In this case, each matching character exponentially increases the fitness of the individual.
 
 ![Fitness calculation animation by Andrea Covre](/figures/fitness.gif "Fitness calculation animation")
+
+``` JavaScript
+void calcFitness() {
+  for (int i = 0; i < popSize; i++) { 
+    fitnessValue[i] = 0;
+  }
+
+  for (int i = 0; i < popSize; i++) {
+    int correctGene = 0;
+    for (int j = 0; j < targetLength; j++) {
+      if (population[i][j] == target[j]) {
+        rightGene [i][j] = 1;
+        correctGene += 1;
+        fitnessValue[i] += 10;
+      } else {
+        rightGene [i][j] = 0;
+        correctGene += 0;
+      }
+    }
+    fitnessValue[i] = pow(2, correctGene);
+  }
+}
+```
 
 The higher the fitness of one individual the higher are its chances to reproduce and pass down its genes, allowing these good/useful genes to remain in the population pool and be spread across future generations.
 
@@ -42,6 +73,17 @@ In this algorithm every child is generated using two parents and any individual 
 
 ![Parents selection animation by Andrea Covre](/figures/parents-selection.gif "Parents selection animation")
 
+``` JavaScript
+void getParents() {
+  parentA = matingPool.get(floor(random(totalFitness)));
+  parentB = matingPool.get(floor(random(totalFitness)));
+
+  while (parentA == parentB) {                   //to be sure that the same parent is not chosen twice
+    parentB = matingPool.get(floor(random(totalFitness)));
+  }
+}
+```
+
 
 
 ### Child generation
@@ -53,6 +95,33 @@ In the case of a one-parent reproduction, the child will have the same genes as 
 * **fragmented cross-over**: every child's gene has a 50% chance of coming from either parent (<span style="color:red">FORK</span> + <span style="color:blue">PLAY</span> = <span style="color:red">F</span><span style="color:blue">L</span><span style="color:red">RK</span> or <span style="color:blue">P</span><span style="color:red">O</span><span style="color:blue">A</span><span style="color:red">K</span> or ...)
 
 ![Genes selection and child generation by Andrea Covre](/figures/genes-selection.gif "Genes selection and child generation")
+
+``` JavaScript
+void makeNewChild(String mode) {
+  if (mode == "crossover") {
+    crossOverPoint = floor(random(1, targetLength-1));   // random cross-over
+    for (int i = 0; i < targetLength; i++) {
+      if (i < crossOverPoint) {
+        newGeneration[childIndex-1][i] = population[parentA][i];
+      } else {
+        newGeneration[childIndex-1][i] = population[parentB][i];
+      }
+    }
+  }
+
+  if (mode == "fragmentation") {
+    for (int i = 0; i < targetLength; i++) {
+      if (floor(random(0, 2)) == 0) {
+        newChildMap[i] = 'A';
+        newGeneration[childIndex-1][i] = population[parentA][i];
+      } else {
+        newChildMap[i] = 'B';
+        newGeneration[childIndex-1][i] = population[parentB][i];
+      }
+    }
+  }
+}
+```
 
 In this algorithm, the chosen method is the fragmented cross-over in order to increase diversity within the population.
 
@@ -68,18 +137,62 @@ After the child is generated from the parents, a mutating function is applied so
 
 ![Mutation on a child's genes animation by Andrea Covre](/figures/mutation.gif "Mutation on a child's genes animation")
 
+``` JavaScript
+void applyMutation () {
+    for (int i = 0; i<targetLength; i++) {    
+        if (random(0, 100) <= mutationRate) {  
+            newGeneration[childIndex-1][i] = charPool[floor(random(0, charPool.length))];
+        } 
+    }
+}
+```
+
 In the example below the child's 4th gene was supposed to be inherited by the first parent (the blue one), however a mutation occurred (highlighted in red) that mutated that gene from a "S" to a "J".
 
 ![Mutation on a child's gene by Andrea Covre](/figures/mutation.png "Mutation on a child's gene")
 
 
 
-### New generation
-
-Once all the children have been generated, the parents population gets replaced by the newly computed population and the evolutionary cycle  repeats itself until an individual matches certain criteria that identify it as a solution to the problem.
+### Next generation and evolutionary development
 
 ![New population by Andrea Covre](/figures/new-population.png "New population")
 
-![Generation 206 by Andrea Covre](/figures/generation-206.png "Generation 206")
+Once all the children have been generated, the parent population gets replaced by the newly computed population and the evolutionary cycle  repeats itself until an individual matches certain criteria that identify it as a solution to the problem.
 
-![Perfect individual by Andrea Covre](/figures/generation-287-final.png "Perfect individual")
+<!-- ![Generation 206 by Andrea Covre](/figures/generation-206.png "Generation 206") -->
+![Looping animation of the evolutionary process by Andrea Covre](/figures/full-execution.gif "Looping animation of the evolutionary process ")
+
+After 287 generations we finally have an individual that perfectly matches with the environmental conditions set by the problem, in fact the 4th strings has all the correct characters at the correct positions.
+
+![Perfect individual at gen #287 by Andrea Covre](/figures/generation-287-final.png "Perfect individual at gen #287")
+
+Such individual, therefore, represent the solution to the problem. It's not always possible to achieve perfect fitness scores (optimal solutions), however the higher the fitness score the better the approximation of the solution is.
+
+
+## Files
+
+### Visualization_of_Evolution_V_1_2_0_EXP.pde
+
+This code is the controller and manages the execution of the 14 phases of the algorithm (from the initial generation to replacing the old generation with the new one). Moreover it sets-up the graphics environment, handles keyboard inputs, declares and sets valuable variables and constants (mutation rate, reproduction mode, population size etc.).
+
+### FitnessFunctions.pde
+
+This file contains the functions needed to calculate the fitness score and then the mating probability of each individual.
+
+### ReproductionFunctions.pde
+
+It contains all the functions related to the reproductions phases, such as `createPopulation()`, `getParents()`,  `makeNewChild()`, `applyMutation()` and `transcriptNewGen()`.
+
+### DisplayElements.pde
+
+It manages and contains all the variables, constants and functions in charge of creating and displaying graphical elements and information about the algorithm execution.
+
+### StatusBar.pde
+
+It contains the code needed to create and display a status bar at the bottom of the screen that shows relevant information.
+
+
+
+## Execution
+
+To run the visualization you will need to download [Processing](https://processing.org), load the files in its IDE and run the code from there.

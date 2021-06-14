@@ -47,7 +47,7 @@ void applyMutation () {
   stroke(0, 255, 151);
   for (int i = 0; i<targetLength; i++) {
     tempChildMutation[i] = newGeneration[childIndex-1][i];   //creating a temprorary child equal to the one of indexChild
-                                                             //this is necessary to not corrupt the DNA of the actual child if the skecth keeps lopping in this phase
+                                                             
     boolean mutation = false;
 
     if (random(0, 100) <= mutationRate) {
