@@ -202,7 +202,7 @@ To run the visualization you will need to download [Processing](https://processi
 
 ## Resources
 
-## COVRE_ANDREA-TESI_MALIGNANI_2017.pdf - (only available in Italian 🇮🇹)
+### COVRE_ANDREA-TESI_MALIGNANI_2017.pdf - (only available in Italian 🇮🇹)
 
 This PDF is the original paper submitted in 2017 as high school graduation thesis.
 It thoroughly discusses Genetic Algorithm's terminology, techniques, procedures, mathematical and biological foundations and mechanisms, Darwin's theory of evolution, current and future real-world applications and more in-depth documentation about the visualization software.
