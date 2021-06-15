@@ -41,7 +41,7 @@ void makeNewChild(String mode) {
   }
 }
 
-void applyMutation () {
+void applyMutation() {
   pushMatrix();
   translate(700, 80+45*(childIndex-1));
   stroke(0, 255, 151);
@@ -77,7 +77,7 @@ void applyMutation () {
   popMatrix();
 }
 
-void transcriptNewGen () {
+void transcriptNewGen() {
   for (int j = 0; j < popSize; j++) {
     for (int i = 0; i < targetLength; i++) {
       population[j][i] = newGeneration[j][i];

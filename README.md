@@ -200,6 +200,15 @@ To run the visualization you will need to download [Processing](https://processi
 
 <br>
 
+## Controls
+
+### Keyboard inputs:
+
+* Space Bar → move to the next phase
+* L → execute all phases automatically and repeat cycle
+
+<br>
+
 ## Resources
 
 ### COVRE_ANDREA-TESI_MALIGNANI_2017.pdf - (only available in Italian 🇮🇹)
