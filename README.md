@@ -66,7 +66,7 @@ The higher the fitness of one individual the higher are its chances to reproduce
 
 ### Parents selection
 
-To create a *child* of the next generation one or more indivudals can be selected based on their fitness score. 
+To create a *child* of the next generation one or more indivudals can be selected based on their fitness score. This is where **natural selection** is applied, therefore parents with a higher fitness are more likely to survive and therefore be selected as parents. 
 
 ![Parents selection by Andrea Covre](/figures/parents-selection.png "Parents selection")
 
